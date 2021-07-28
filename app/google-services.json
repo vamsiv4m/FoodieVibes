@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "93655095641",
+    "project_id": "foodie-vibes",
+    "storage_bucket": "foodie-vibes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93655095641:android:4947d5d47b21ec546ed448",
+        "android_client_info": {
+          "package_name": "com.example.foodievibes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "93655095641-e59ev8ttnl138p5ni9d5ddf3onc2m4b0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-Q5D3biw5cZL1gpB7Mt7SwcxYLmd6HeM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "93655095641-e59ev8ttnl138p5ni9d5ddf3onc2m4b0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93655095641:android:a95c26107f8c73ec6ed448",
+        "android_client_info": {
+          "package_name": "com.example.tejuproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "93655095641-e59ev8ttnl138p5ni9d5ddf3onc2m4b0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-Q5D3biw5cZL1gpB7Mt7SwcxYLmd6HeM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "93655095641-e59ev8ttnl138p5ni9d5ddf3onc2m4b0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

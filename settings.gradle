@@ -1,0 +1,2 @@
+rootProject.name = "Teju Project"
+include ':app'

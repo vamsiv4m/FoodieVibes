@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bgimg" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#A1000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        android:fontFamily="@font/carter_one"
+        android:text="Registration"
+        android:textColor="#F3F3F3"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/runame"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/roundbg"
+        android:ems="10"
+        android:hint="Enter Username"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:textColor="#F3F3F3"
+        android:textColorHint="#CFCFCF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/rpasswd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/roundbg"
+        android:ems="10"
+        android:hint="Enter Password"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:textColor="#F3F3F3"
+        android:textColorHint="#CFCFCF"
+        app:layout_constraintEnd_toEndOf="@+id/runame"
+        app:layout_constraintStart_toStartOf="@+id/runame"
+        app:layout_constraintTop_toBottomOf="@+id/runame" />
+
+    <EditText
+        android:id="@+id/remail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/roundbg"
+        android:ems="10"
+        android:hint="Enter Email"
+        android:inputType="textEmailAddress"
+        android:padding="10dp"
+        android:textColor="#F3F3F3"
+        android:textColorHint="#CFCFCF"
+        app:layout_constraintEnd_toEndOf="@+id/rpasswd"
+        app:layout_constraintStart_toStartOf="@+id/rpasswd"
+        app:layout_constraintTop_toBottomOf="@+id/rpasswd" />
+
+    <EditText
+        android:id="@+id/rphno"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/roundbg"
+        android:ems="10"
+        android:hint="Enter Phonenumber"
+        android:inputType="phone"
+        android:padding="10dp"
+        android:textColor="#F3F3F3"
+        android:textColorHint="#CFCFCF"
+        app:layout_constraintEnd_toEndOf="@+id/remail"
+        app:layout_constraintStart_toStartOf="@+id/remail"
+        app:layout_constraintTop_toBottomOf="@+id/remail" />
+
+    <Button
+        android:id="@+id/rsignup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="sign-up"
+        app:backgroundTint="#DD4C2C2C"
+        app:layout_constraintEnd_toEndOf="@+id/rphno"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/rphno"
+        app:layout_constraintTop_toBottomOf="@+id/rphno" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
