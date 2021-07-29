@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TejuProject">
-        <activity android:name=".ForgotPassword"
-            android:launchMode="singleTop"
-            />
+        <activity android:name="owner.FoodieVibes"></activity>
+        <activity
+            android:name=".ForgotPassword"
+            android:launchMode="singleTop" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".Login">
             <intent-filter>

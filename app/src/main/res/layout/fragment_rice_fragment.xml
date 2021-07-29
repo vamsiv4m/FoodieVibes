@@ -4,12 +4,8 @@
     android:layout_height="match_parent"
     tools:context="fragments.Rice_fragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ricerecyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:gravity="center"
-        android:text="This is rice" />
-
+        android:layout_height="match_parent" />
 </FrameLayout>

@@ -23,6 +23,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import owner.FoodieVibes;
+
 public class Login extends AppCompatActivity {
     TextView noaccount,forgotpasswd;
     EditText luname,lpassword;
@@ -71,35 +73,38 @@ public class Login extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String uname=luname.getText().toString();
-                String pass=lpassword.getText().toString();
-                reference= FirebaseDatabase.getInstance().getReference("users");
-                Query query=reference.orderByChild("username").equalTo(uname);
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()){
-                            String passwd=snapshot.child(uname).child("password").getValue(String.class);
-                            if (pass.equals(passwd)){
-                                String fullname=snapshot.child(uname).child("username").getValue(String.class);
-                                String email=snapshot.child(uname).child("email").getValue(String.class);
-                                Intent i=new Intent(getApplicationContext(),HomeActivity.class);
-                                startActivity(i);
-                            }
-                            else {
-                                Toast.makeText(Login.this, "wrong password", Toast.LENGTH_SHORT).show();
+                String uname = luname.getText().toString();
+                String pass = lpassword.getText().toString();
+                if (uname.equals("owner") && pass.equals("foodievibes")) {
+                    Intent i=new Intent(getApplicationContext(), FoodieVibes.class);
+                    startActivity(i);
+                } else {
+                    reference = FirebaseDatabase.getInstance().getReference("users");
+                    Query query = reference.orderByChild("username").equalTo(uname);
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                String passwd = snapshot.child(uname).child("password").getValue(String.class);
+                                if (pass.equals(passwd)) {
+                                    String fullname = snapshot.child(uname).child("username").getValue(String.class);
+                                    String email = snapshot.child(uname).child("email").getValue(String.class);
+                                    Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+                                    startActivity(i);
+                                } else {
+                                    Toast.makeText(Login.this, "wrong password", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(Login.this, "No User", Toast.LENGTH_SHORT).show();
                             }
                         }
-                        else{
-                            Toast.makeText(Login.this, "No User", Toast.LENGTH_SHORT).show();
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
                         }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+                    });
+                }
             }
         });
         noaccount.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +114,7 @@ public class Login extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
     }
 
     @Override
