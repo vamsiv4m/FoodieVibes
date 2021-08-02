@@ -4,12 +4,8 @@
     android:layout_height="match_parent"
     tools:context="fragments.Shakes_fragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/shakesrrecyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:gravity="center"
-        android:text="this is shakes" />
-
+        android:layout_height="match_parent" />
 </FrameLayout>

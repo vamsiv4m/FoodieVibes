@@ -28,6 +28,7 @@ public class HomeActivity extends AppCompatActivity {
         shakes=findViewById(R.id.shakes);
         fries=findViewById(R.id.fries);
 
+
         burger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

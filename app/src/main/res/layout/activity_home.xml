@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeActivity"
-    tools:openDrawer="left"
-    tools:ignore="MissingClass">
+    tools:ignore="MissingClass"
+    tools:openDrawer="left">
 
 
     <View
@@ -14,8 +14,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/round"
-        app:layout_constraintBottom_toBottomOf="@+id/chipNavigationBar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -200,6 +201,7 @@
         android:layout_margin="15dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/roundmenu"
         android:elevation="2.5dp"
         android:paddingLeft="10dp"
@@ -216,12 +218,10 @@
         android:id="@+id/framelayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/chipNavigationBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.442"
         app:layout_constraintStart_toEndOf="@+id/view3"
         app:layout_constraintTop_toTopOf="@+id/view3"
         tools:ignore="MissingConstraints">

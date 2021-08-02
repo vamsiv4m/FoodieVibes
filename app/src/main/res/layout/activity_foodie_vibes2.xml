@@ -11,6 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11">
 
         <TextView
@@ -30,9 +32,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
             app:layout_constraintStart_toStartOf="@+id/textView12"
             app:layout_constraintTop_toBottomOf="@+id/textView12">
 
@@ -40,7 +41,10 @@
                 android:id="@+id/ownerburger"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Burger" />
+                android:saveEnabled="false"
+                android:selectAllOnFocus="false"
+                android:text="Burger"
+                app:useMaterialThemeColors="false" />
 
             <RadioButton
                 android:id="@+id/ownerpizza"
@@ -72,6 +76,34 @@
                 android:layout_height="wrap_content"
                 android:text="Shakes" />
         </RadioGroup>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="166dp" />
+
+        <Button
+            android:id="@+id/picImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="pic Image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toTopOf="@+id/radiogroup" />
+
+        <ImageView
+            android:id="@+id/displayImage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/picImage"
+            app:layout_constraintStart_toStartOf="@+id/picImage"
+            app:layout_constraintTop_toBottomOf="@+id/picImage"
+            app:srcCompat="@drawable/avacadobuger" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
