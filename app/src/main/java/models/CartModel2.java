@@ -2,6 +2,7 @@ package models;
 
 public class CartModel2 {
     String imageurl;
+    String uname;
     String itemname;
     String price;
     String billname;
@@ -9,6 +10,10 @@ public class CartModel2 {
     int count;
     int total;
 
+
+    public void setUname(String uname) {
+        this.uname = uname;
+    }
 
     public String getImageurl() {
         return imageurl;
