@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import models.BurgerModel;
+import models.Favmodel;
 
 public class BurgerItemsAdapter extends RecyclerView.Adapter<BurgerItemsAdapter.MyHolder> {
     List<BurgerModel> list;
@@ -58,21 +60,9 @@ public class BurgerItemsAdapter extends RecyclerView.Adapter<BurgerItemsAdapter.
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull @NotNull MyHolder holder, int position) {
+        final int[] a = {0};
         SharedPreferences sharedPreferences=context.getSharedPreferences(filename,0);
         String uname=sharedPreferences.getString(username,"");
-        favstatus="";
-        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("users");
-        reference.child(uname).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                favstatus = (String) snapshot.child("favourites").child(list.get(position).getImageName()+"").child("favstatus").getValue();
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-            }
-        });
         holder.price.setText(list.get(position).getPrice()+"");
         holder.itemname.setText(list.get(position).getImageName()+"");
         Glide.with(context).load(list.get(position).getImagetype()).into(holder.itemtype);
@@ -81,10 +71,11 @@ public class BurgerItemsAdapter extends RecyclerView.Adapter<BurgerItemsAdapter.
         holder.small.setOnClickListener(view -> {
                     Intent i=new Intent(context, NextPage.class);
                     i.putExtra("image",list.get(position).getItemImage());
-                    i.putExtra("price",list.get(position).getPrice());
+                    i.putExtra("price",list.get(position).getPrice().substring(2));
                     i.putExtra("name",list.get(position).getImageName());
+                    i.putExtra("size","small");
                     i.putExtra("type",list.get(position).getImagetype());
-                    i.putExtra("fav",favstatus);
+//                  i.putExtra("fav",a[0]);
                     context.startActivity(i);
         });
 
@@ -93,6 +84,7 @@ public class BurgerItemsAdapter extends RecyclerView.Adapter<BurgerItemsAdapter.
             i.putExtra("image",list.get(position).getItemImage());
             i.putExtra("price",Integer.parseInt(list.get(position).getPrice().substring(2))+35+"");
             i.putExtra("name",list.get(position).getImageName());
+            i.putExtra("size","medium");
             i.putExtra("type",list.get(position).getImagetype());
             i.putExtra("fav",favstatus);
             context.startActivity(i);
@@ -105,7 +97,6 @@ public class BurgerItemsAdapter extends RecyclerView.Adapter<BurgerItemsAdapter.
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder{
-        int r=0;
         Button small,medium;
         TextView price,size,itemname;
         ImageView itemtype,itemImage;

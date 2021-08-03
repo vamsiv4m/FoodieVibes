@@ -40,6 +40,12 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPreferences=getSharedPreferences(filename, Context.MODE_PRIVATE);
+        if (sharedPreferences.contains(username)){
+            Intent i=new Intent(getApplicationContext(),HomeActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+            finish();
+        }
         editor=sharedPreferences.edit();
         setContentView(R.layout.activity_login);
         noaccount=findViewById(R.id.noaccount);
