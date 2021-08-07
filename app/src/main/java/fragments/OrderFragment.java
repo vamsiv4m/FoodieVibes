@@ -1,6 +1,5 @@
 package fragments;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,43 +25,37 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapters.CartAdapter;
-import models.CartModel2;
+import adapters.OrdersAdapter;
+import models.OrdersModel;
 
-
-public class CartFragment extends Fragment {
-    SharedPreferences sharedPreferences;
-    private final static String filename="filename";
-    private final static String username="username";
-    List<CartModel2> list=new ArrayList<>();
-    public CartFragment() {
-
+public class OrderFragment extends Fragment {
+    List<OrdersModel> list=new ArrayList<>();
+    public OrderFragment() {
+        // Required empty public constructor
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        sharedPreferences=getContext().getSharedPreferences(filename,0);
-        String uname=sharedPreferences.getString(username,"");
+        View v= inflater.inflate(R.layout.fragment_fav, container, false);
         String uid= FirebaseAuth.getInstance().getUid();
-        Log.d("myuname",uname+"");
-        View v = inflater.inflate(R.layout.fragment_cart, container, false);
-        RecyclerView recyclerView=v.findViewById(R.id.cartrecycler);
-        CartAdapter cartAdapter=new CartAdapter(getContext(),list);
+        RecyclerView recyclerView=v.findViewById(R.id.orderrecycler);
+        OrdersAdapter ordersAdapter=new OrdersAdapter(list,getContext());
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
+        recyclerView.setAdapter(ordersAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(cartAdapter);
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("users");
-        reference.addValueEventListener(new ValueEventListener() {
+        assert uid != null;
+        reference.child(uid).child("myorders").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 list.clear();
-                assert uid != null;
-                for (DataSnapshot dataSnapshot:snapshot.child(uid).child("mycart").getChildren()) {
-                    CartModel2 cartModel=dataSnapshot.getValue(CartModel2.class);
-                    list.add(cartModel);
+                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
+                    Log.d("mydatasnapshot",dataSnapshot+"");
+                    OrdersModel ordersModel=dataSnapshot.getValue(OrdersModel.class);
+                    list.add(ordersModel);
                 }
-                cartAdapter.notifyDataSetChanged();
+                ordersAdapter.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {

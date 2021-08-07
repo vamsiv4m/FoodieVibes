@@ -3,6 +3,8 @@ package com.example.tejuproject;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,12 +58,12 @@ public class NextPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_next_page);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         sharedPreferences = getSharedPreferences(filename, 0);
         String uname = sharedPreferences.getString(username, "");
-        setContentView(R.layout.activity_next_page);
         billname=findViewById(R.id.billname);
         address=findViewById(R.id.address);
-        lottieAnimationView = findViewById(R.id.lottiefav);
         nextback = findViewById(R.id.nextback);
         nextprice = findViewById(R.id.nextprice);
         nextImage = findViewById(R.id.nextImage);
@@ -77,13 +80,12 @@ public class NextPage extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
         Intent i = getIntent();
         String imgurl = i.getStringExtra("image");
         String price = i.getStringExtra("price");
         String size = i.getStringExtra("size");
         String name = i.getStringExtra("name");
-        String type = i.getStringExtra("type");
-//        int f = i.getIntExtra("fav", 0);
         nextItemname.setText(name);
         nextprice.setText(price);
         Glide.with(this)
@@ -103,6 +105,8 @@ public class NextPage extends AppCompatActivity {
 
         nextprice.setText(price);
         totalprice.setText("Total Price : ₹ "+price);
+        p1 = Integer.parseInt(price);
+        p2=p1*spc;
         smallplus.setOnClickListener(view -> {
             spc += 1;
             p1 = Integer.parseInt(price);
@@ -119,6 +123,7 @@ public class NextPage extends AppCompatActivity {
         smallminus.setOnClickListener(view -> {
             spc -= 1;
             p1 = Integer.parseInt(price);
+            p2=p1*spc;
             if (spc >= 1) {
                 if (spc <= 5) {
                     smalllabel.setText("0" + spc);
@@ -132,25 +137,21 @@ public class NextPage extends AppCompatActivity {
         });
 
 
-        lottieAnimationView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lottieAnimationView.getAnimation();
-                int a=1;
-                DatabaseReference reference=FirebaseDatabase.getInstance().getReference("users");
-                reference.child(uname).child("favourites").child(name).child(a+"").setValue(a+"");
-            }
-        });
 
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent i = getIntent();
+                String price = i.getStringExtra("price");
+                Toast.makeText(NextPage.this, price+"", Toast.LENGTH_SHORT).show();
                 String bn=billname.getText().toString();
                 String add=address.getText().toString();
-                if (bn!=null && add!=null){
+                String uid= FirebaseAuth.getInstance().getUid();
+                if (!bn.equals("")){
                     DatabaseReference reference=FirebaseDatabase.getInstance().getReference("users");
-                    CartModel cartModel=new CartModel(imgurl,name,price,bn,add,spc,p2);
-                    reference.child(uname).child("mycart").child(name).setValue(cartModel);
+                    CartModel cartModel=new CartModel(imgurl,name,price,bn,add,spc,p2,size);
+                    assert uid != null;
+                    reference.child(uid).child("mycart").child(name).setValue(cartModel);
                     Toast.makeText(NextPage.this, "Successfully Added.", Toast.LENGTH_SHORT).show();
                 }
                 else{

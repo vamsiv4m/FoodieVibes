@@ -8,9 +8,9 @@
         app:cnb_iconSize="22dp"
         app:cnb_iconColor="#165B80"/>
     <item
-        android:id="@+id/fav"
-        android:icon="@drawable/heart"
-        android:title="Favorites"
+        android:id="@+id/orders"
+        android:icon="@drawable/orders"
+        android:title="My Orders"
         app:cnb_iconSize="22dp"
         app:cnb_iconColor="#932D2D"/>
 </menu>

@@ -60,7 +60,6 @@ public class BurgerItemsAdapter extends RecyclerView.Adapter<BurgerItemsAdapter.
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull @NotNull MyHolder holder, int position) {
-        final int[] a = {0};
         SharedPreferences sharedPreferences=context.getSharedPreferences(filename,0);
         String uname=sharedPreferences.getString(username,"");
         holder.price.setText(list.get(position).getPrice()+"");
@@ -75,7 +74,6 @@ public class BurgerItemsAdapter extends RecyclerView.Adapter<BurgerItemsAdapter.
                     i.putExtra("name",list.get(position).getImageName());
                     i.putExtra("size","small");
                     i.putExtra("type",list.get(position).getImagetype());
-//                  i.putExtra("fav",a[0]);
                     context.startActivity(i);
         });
 

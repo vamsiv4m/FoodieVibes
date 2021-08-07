@@ -9,7 +9,15 @@ public class CartModel2 {
     String address;
     int count;
     int total;
+    String size;
 
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
 
     public void setUname(String uname) {
         this.uname = uname;

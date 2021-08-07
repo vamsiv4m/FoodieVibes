@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TejuProject">
-        <activity android:name=".NextPage"></activity>
+        <activity android:name=".UserSettings"></activity>
+        <activity android:name=".DoneActivity" />
+        <activity android:name=".NextPage" />
         <activity android:name="owner.FoodieVibes" />
         <activity
             android:name=".ForgotPassword"

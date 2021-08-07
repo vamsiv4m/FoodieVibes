@@ -7,18 +7,6 @@
     android:background="#4D989898"
     tools:context=".NextPage">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottiefav"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/nextpageround"
-        app:layout_constraintBottom_toBottomOf="@+id/nextback"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nextback"
-        app:lottie_rawRes="@raw/lf30_editor_jr2ru807"
-        tools:ignore="MissingConstraints" />
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView4"
         android:layout_width="200dp"
@@ -123,7 +111,7 @@
             android:maxLines="1"
             android:text="Panner Burger"
             android:textColor="#303030"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -141,7 +129,7 @@
             android:paddingBottom="5dp"
             android:text="$ 99"
             android:textColor="#303030"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/nextitemname"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/nextitemname" />
@@ -167,8 +155,8 @@
 
                 <ImageView
                     android:id="@+id/smallminus"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
@@ -194,8 +182,8 @@
 
                 <ImageView
                     android:id="@+id/smallplus"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
@@ -235,10 +223,10 @@
             android:ems="10"
             android:hint="Enter name"
             android:inputType="textPersonName"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="8dp"
             android:paddingRight="15dp"
-            android:paddingBottom="10dp"
+            android:paddingBottom="8dp"
             android:textColor="#2B2B2B"
             app:layout_constraintEnd_toStartOf="@+id/guideline5"
             app:layout_constraintHorizontal_bias="0.0"
@@ -261,10 +249,10 @@
             android:ems="10"
             android:hint="Enter Address"
             android:inputType="textPersonName"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="8dp"
             android:paddingRight="15dp"
-            android:paddingBottom="10dp"
+            android:paddingBottom="8dp"
             android:textColor="#323131"
             app:layout_constraintEnd_toEndOf="@+id/billname"
             app:layout_constraintStart_toStartOf="@+id/billname"

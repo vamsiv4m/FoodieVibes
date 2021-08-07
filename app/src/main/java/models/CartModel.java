@@ -8,8 +8,9 @@ public class CartModel {
     String address;
     int count;
     int total;
+    String size;
 
-    public CartModel(String imageurl, String itemname, String price, String billname, String address, int count, int total) {
+    public CartModel(String imageurl, String itemname, String price, String billname, String address, int count, int total, String size) {
         this.imageurl = imageurl;
         this.itemname = itemname;
         this.price = price;
@@ -17,6 +18,15 @@ public class CartModel {
         this.address = address;
         this.count = count;
         this.total = total;
+        this.size = size;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 
     public String getImageurl() {

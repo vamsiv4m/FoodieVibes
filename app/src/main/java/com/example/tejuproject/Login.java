@@ -15,13 +15,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
 
 import owner.FoodieVibes;
 
@@ -32,7 +38,7 @@ public class Login extends AppCompatActivity {
     SharedPreferences.Editor editor;
     private static final String filename="filename";
     private static final String username="username";
-
+    FirebaseAuth auth;
     Button login;
     DatabaseReference reference;
     @SuppressLint("CommitPrefEdits")
@@ -40,6 +46,7 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPreferences=getSharedPreferences(filename, Context.MODE_PRIVATE);
+        auth=FirebaseAuth.getInstance();
         if (sharedPreferences.contains(username)){
             Intent i=new Intent(getApplicationContext(),HomeActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -52,24 +59,19 @@ public class Login extends AppCompatActivity {
         forgotpasswd=findViewById(R.id.forgot_passwd);
         luname=findViewById(R.id.luname);
         lpassword=findViewById(R.id.lpasswd);
-
         forgotpasswd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String uname=luname.getText().toString();
                 reference=FirebaseDatabase.getInstance().getReference("users");
                 reference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Intent i=new Intent(getApplicationContext(),ForgotPassword.class);
-                        editor.putString(username,uname);
-                        editor.apply();
                         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
                     }
                 });
             }
@@ -81,36 +83,53 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 String uname = luname.getText().toString();
                 String pass = lpassword.getText().toString();
-                if (uname.equals("owner") && pass.equals("foodievibes")) {
-                    Intent i=new Intent(getApplicationContext(), FoodieVibes.class);
+                auth.signInWithEmailAndPassword(uname,pass).addOnSuccessListener(authResult -> {
+                    editor.putString(username,uname);
+                    editor.apply();
+                    Intent i;
+                    if (uname.equals("foodievibesowner@gmail.com") && pass.equals("foodievibes")) {
+                        i = new Intent(getApplicationContext(), FoodieVibes.class);
+                    }
+                    else{
+                        i = new Intent(getApplicationContext(), HomeActivity.class);
+                    }
                     startActivity(i);
-                } else {
-                    reference = FirebaseDatabase.getInstance().getReference("users");
-                    Query query = reference.orderByChild("username").equalTo(uname);
-                    query.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                String passwd = snapshot.child(uname).child("password").getValue(String.class);
-                                if (pass.equals(passwd)) {
-                                    String fullname = snapshot.child(uname).child("username").getValue(String.class);
-                                    String email = snapshot.child(uname).child("email").getValue(String.class);
-                                    Intent i = new Intent(getApplicationContext(), HomeActivity.class);
-                                    startActivity(i);
-                                } else {
-                                    Toast.makeText(Login.this, "wrong password", Toast.LENGTH_SHORT).show();
-                                }
-                            } else {
-                                Toast.makeText(Login.this, "No User", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull @NotNull Exception e) {
+                        Toast.makeText(Login.this, "Please Enter Valid email and password", Toast.LENGTH_SHORT).show();
+                    }
+                });
+//                if (uname.equals("owner") && pass.equals("foodievibes")) {
+//                    Intent i=new Intent(getApplicationContext(), FoodieVibes.class);
+//                    startActivity(i);
+//                } else {
+//                    reference = FirebaseDatabase.getInstance().getReference("users");
+//                    Query query = reference.orderByChild("username").equalTo(uname);
+//                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                            if (snapshot.exists()) {
+//                                String passwd = snapshot.child(uname).child("password").getValue(String.class);
+//                                if (pass.equals(passwd)) {
+//                                    String fullname = snapshot.child(uname).child("username").getValue(String.class);
+//                                    String email = snapshot.child(uname).child("email").getValue(String.class);
+//                                    Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+//                                    startActivity(i);
+//                                } else {
+//                                    Toast.makeText(Login.this, "wrong password", Toast.LENGTH_SHORT).show();
+//                                }
+//                            } else {
+//                                Toast.makeText(Login.this, "No User", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                        }
+//                    });
+//                }
             }
         });
         noaccount.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +139,6 @@ public class Login extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
     }
 
     @Override
