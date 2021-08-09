@@ -10,6 +10,19 @@ public class CartModel2 {
     int count;
     int total;
     String size;
+    String type;
+
+    public String getUname() {
+        return uname;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getSize() {
         return size;

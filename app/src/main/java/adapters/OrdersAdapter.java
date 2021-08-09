@@ -39,7 +39,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyHolder> 
     @NotNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        return new MyHolder(LayoutInflater.from(context).inflate(R.layout.orderslayout,parent,false));
+        return new MyHolder(LayoutInflater.from(context).inflate(R.layout.orderslayout, parent, false));
     }
 
     @SuppressLint("SetTextI18n")
@@ -68,7 +68,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyHolder> 
         return list.size();
     }
 
-    class MyHolder extends RecyclerView.ViewHolder{
+    static class MyHolder extends RecyclerView.ViewHolder{
         ImageView itemimage;
         TextView itemname,price;
         TextView count;

@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.tejuproject.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +33,8 @@ import models.CartModel2;
 
 
 public class CartFragment extends Fragment {
+    TextView carttext;
+    ImageView cartImg;
     SharedPreferences sharedPreferences;
     private final static String filename="filename";
     private final static String username="username";
@@ -47,6 +51,9 @@ public class CartFragment extends Fragment {
         String uid= FirebaseAuth.getInstance().getUid();
         Log.d("myuname",uname+"");
         View v = inflater.inflate(R.layout.fragment_cart, container, false);
+        cartImg=v.findViewById(R.id.cartimg);
+        carttext=v.findViewById(R.id.carttext);
+
         RecyclerView recyclerView=v.findViewById(R.id.cartrecycler);
         CartAdapter cartAdapter=new CartAdapter(getContext(),list);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
@@ -59,8 +66,16 @@ public class CartFragment extends Fragment {
                 list.clear();
                 assert uid != null;
                 for (DataSnapshot dataSnapshot:snapshot.child(uid).child("mycart").getChildren()) {
-                    CartModel2 cartModel=dataSnapshot.getValue(CartModel2.class);
-                    list.add(cartModel);
+                    if (dataSnapshot!=null) {
+                        cartImg.setVisibility(View.GONE);
+                        carttext.setVisibility(View.GONE);
+                        CartModel2 cartModel = dataSnapshot.getValue(CartModel2.class);
+                        list.add(cartModel);
+                    }
+                    else{
+                        cartImg.setVisibility(View.VISIBLE);
+                        carttext.setVisibility(View.VISIBLE);
+                    }
                 }
                 cartAdapter.notifyDataSetChanged();
             }

@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.tejuproject.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +32,8 @@ import models.OrdersModel;
 
 public class OrderFragment extends Fragment {
     List<OrdersModel> list=new ArrayList<>();
+    ImageView orderimg;
+    TextView ordertext;
     public OrderFragment() {
         // Required empty public constructor
     }
@@ -39,6 +43,9 @@ public class OrderFragment extends Fragment {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_fav, container, false);
         String uid= FirebaseAuth.getInstance().getUid();
+        orderimg=v.findViewById(R.id.orderimg);
+        ordertext=v.findViewById(R.id.ordertext);
+
         RecyclerView recyclerView=v.findViewById(R.id.orderrecycler);
         OrdersAdapter ordersAdapter=new OrdersAdapter(list,getContext());
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
@@ -51,9 +58,17 @@ public class OrderFragment extends Fragment {
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 list.clear();
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    Log.d("mydatasnapshot",dataSnapshot+"");
-                    OrdersModel ordersModel=dataSnapshot.getValue(OrdersModel.class);
-                    list.add(ordersModel);
+                    if (dataSnapshot!=null){
+                        ordertext.setVisibility(View.GONE);
+                        orderimg.setVisibility(View.GONE);
+                        Log.d("mydatasnapshot",dataSnapshot+"");
+                        OrdersModel ordersModel=dataSnapshot.getValue(OrdersModel.class);
+                        list.add(ordersModel);
+                    }
+                   else{
+                       orderimg.setVisibility(View.VISIBLE);
+                       ordertext.setVisibility(View.VISIBLE);
+                    }
                 }
                 ordersAdapter.notifyDataSetChanged();
             }

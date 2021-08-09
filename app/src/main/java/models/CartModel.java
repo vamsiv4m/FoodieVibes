@@ -9,8 +9,9 @@ public class CartModel {
     int count;
     int total;
     String size;
+    String type;
 
-    public CartModel(String imageurl, String itemname, String price, String billname, String address, int count, int total, String size) {
+    public CartModel(String imageurl, String itemname, String price, String billname, String address, int count, int total, String size, String type) {
         this.imageurl = imageurl;
         this.itemname = itemname;
         this.price = price;
@@ -19,6 +20,15 @@ public class CartModel {
         this.count = count;
         this.total = total;
         this.size = size;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getSize() {

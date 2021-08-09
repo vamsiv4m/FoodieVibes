@@ -3,6 +3,7 @@ package adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull @NotNull MyViewHolder holder, int position) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("filename",0);
+        String user=sharedPreferences.getString("username","");
         String uid= FirebaseAuth.getInstance().getUid();
         holder.cartprice.setText(String.valueOf("₹ "+list.get(position).getTotal()));
         holder.cartItemName.setText(list.get(position).getItemname());
@@ -53,11 +56,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         holder.checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String orderid= UUID.randomUUID().toString();
-                DatabaseReference reference= FirebaseDatabase.getInstance().getReference("users");
-                OrderModel2 ordersModel=new OrderModel2(list.get(position).getBillname(),orderid,list.get(position).getItemname(),list.get(position).getAddress(),"",list.get(position).getImageurl(),list.get(position).getCount(),list.get(position).getTotal(),list.get(position).getSize());
+                String orderid= UUID.randomUUID().toString().substring(0,13);
+                OrderModel2 ordersModel=new OrderModel2(list.get(position).getBillname(),orderid,list.get(position).getItemname(),list.get(position).getAddress(),list.get(position).getImageurl(),list.get(position).getCount(),list.get(position).getTotal(),list.get(position).getSize(),user,list.get(position).getType());
+                DatabaseReference reference=FirebaseDatabase.getInstance().getReference("users");
+                reference.child(uid).child("myorders").child(orderid).setValue(ordersModel);
+                reference= FirebaseDatabase.getInstance().getReference("orders");
                 assert uid != null;
-                reference.child(uid).child("myorders").child(orderid).setValue(ordersModel).addOnCompleteListener(unused -> {
+                reference.child(orderid).setValue(ordersModel).addOnCompleteListener(unused -> {
                     Intent i=new Intent(context,DoneActivity.class);
                     i.putExtra("itemname",list.get(position).getItemname());
                     context.startActivity(i);

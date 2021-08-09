@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F7F3FF"
     tools:context=".UserSettings">
 
     <Button
         android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="24dp"
         android:backgroundTint="#F48B8B"
         android:text="Logout"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -60,14 +61,16 @@
 
             <TextView
                 android:id="@+id/settingsemail"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:text="email@gmail.com"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView6"
-                app:layout_constraintEnd_toEndOf="@+id/settingusername"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/settingusername"
                 app:layout_constraintTop_toBottomOf="@+id/settingusername"
                 app:layout_constraintVertical_bias="0.0" />

@@ -41,18 +41,15 @@ import models.CartModel;
 
 public class NextPage extends AppCompatActivity {
     ImageView nextback, nextImage;
-    String favstatus = "0";
     Button cart;
     EditText billname,address;
-    TextView nextItemname, nextprice, smalllabel, totalprice, format, success;
+    TextView nextItemname, nextprice, smalllabel, totalprice, format;
     SharedPreferences sharedPreferences;
     private static final String filename = "filename";
-    private static final String username = "username";
     ImageView smallminus;
     ImageView smallplus;
     int spc = 1;
     int p1,p2=0;
-    LottieAnimationView lottieAnimationView;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -61,7 +58,6 @@ public class NextPage extends AppCompatActivity {
         setContentView(R.layout.activity_next_page);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         sharedPreferences = getSharedPreferences(filename, 0);
-        String uname = sharedPreferences.getString(username, "");
         billname=findViewById(R.id.billname);
         address=findViewById(R.id.address);
         nextback = findViewById(R.id.nextback);
@@ -70,16 +66,12 @@ public class NextPage extends AppCompatActivity {
         cart=findViewById(R.id.cart);
         format = findViewById(R.id.format);
         nextItemname = findViewById(R.id.nextitemname);
+
         smallminus = findViewById(R.id.smallminus);
         smallplus = findViewById(R.id.smallplus);
         smalllabel = findViewById(R.id.smallLabel);
         totalprice = findViewById(R.id.totalprice);
-        nextback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        nextback.setOnClickListener(view -> onBackPressed());
 
         Intent i = getIntent();
         String imgurl = i.getStringExtra("image");
@@ -138,25 +130,22 @@ public class NextPage extends AppCompatActivity {
 
 
 
-        cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = getIntent();
-                String price = i.getStringExtra("price");
-                Toast.makeText(NextPage.this, price+"", Toast.LENGTH_SHORT).show();
-                String bn=billname.getText().toString();
-                String add=address.getText().toString();
-                String uid= FirebaseAuth.getInstance().getUid();
-                if (!bn.equals("")){
-                    DatabaseReference reference=FirebaseDatabase.getInstance().getReference("users");
-                    CartModel cartModel=new CartModel(imgurl,name,price,bn,add,spc,p2,size);
-                    assert uid != null;
-                    reference.child(uid).child("mycart").child(name).setValue(cartModel);
-                    Toast.makeText(NextPage.this, "Successfully Added.", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Toast.makeText(NextPage.this, "Fields Cannot Empty", Toast.LENGTH_SHORT).show();
-                }
+        cart.setOnClickListener(view -> {
+            String price1 = getIntent().getStringExtra("price");
+            String type = getIntent().getStringExtra("type");
+            String bn=billname.getText().toString();
+            String add=address.getText().toString();
+            String uid= FirebaseAuth.getInstance().getUid();
+            if (!bn.equals("")){
+                DatabaseReference reference=FirebaseDatabase.getInstance().getReference("users");
+                CartModel cartModel=new CartModel(imgurl,name, price1,bn,add,spc,p2,size,type);
+                assert uid != null;
+                reference.child(uid).child("mycart").child(name).setValue(cartModel);
+                Toast.makeText(NextPage.this, "Successfully Added.", Toast.LENGTH_SHORT).show();
+                onBackPressed();
+            }
+            else{
+                Toast.makeText(NextPage.this, "Fields Cannot Empty", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -17,6 +17,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.tejuproject.Login;
 import com.example.tejuproject.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,7 +39,7 @@ import java.util.Objects;
 
 
 public class FoodieVibes extends AppCompatActivity {
-    Button submit, picImage;
+    Button submit, picImage, vieworders;
     RadioButton radioButton, radioButton1;
     EditText itemname, size, price;
     String veg = "", nonveg = "";
@@ -55,6 +56,7 @@ public class FoodieVibes extends AppCompatActivity {
         RadioGroup radioGroup = findViewById(R.id.radiogroup);
         RadioGroup radioGroup1 = findViewById(R.id.radiogroup2);
         imageView = findViewById(R.id.displayImage);
+        vieworders = findViewById(R.id.vieworders);
         itemname = findViewById(R.id.owneritemname);
         picImage = findViewById(R.id.picImage);
         price = findViewById(R.id.ownerprice);
@@ -187,6 +189,15 @@ public class FoodieVibes extends AppCompatActivity {
                 }
             }
         });
+
+        vieworders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(getApplicationContext(),ViewOrders.class);
+                startActivity(i);
+            }
+        });
+
     }
 
     private void imageChooser() {
@@ -212,5 +223,14 @@ public class FoodieVibes extends AppCompatActivity {
                 }
             }
         }
+    }
+
+
+    public void logout(View view) {
+        FirebaseAuth.getInstance().signOut();
+        Intent i=new Intent(getApplicationContext(), Login.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+        finish();
     }
 }

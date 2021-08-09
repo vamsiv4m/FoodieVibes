@@ -5,6 +5,23 @@
     android:layout_height="match_parent"
     tools:context="fragments.CartFragment">
 
+    <ImageView
+        android:id="@+id/cartimg"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="-32dp"
+        android:src="@drawable/cart" />
+
+    <TextView
+        android:id="@+id/carttext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="No Items in Cart" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cartrecycler"
         android:layout_width="match_parent"

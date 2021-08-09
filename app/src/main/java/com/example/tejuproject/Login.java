@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,74 +33,78 @@ import org.jetbrains.annotations.NotNull;
 import owner.FoodieVibes;
 
 public class Login extends AppCompatActivity {
-    TextView noaccount,forgotpasswd;
-    EditText luname,lpassword;
+
+    TextView noaccount, forgotpasswd;
+    EditText luname, lpassword;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    private static final String filename="filename";
-    private static final String username="username";
-    FirebaseAuth auth;
+    private static final String filename = "filename";
+    private static final String username = "username";
+    private FirebaseAuth auth;
     Button login;
     DatabaseReference reference;
+
+
     @SuppressLint("CommitPrefEdits")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sharedPreferences=getSharedPreferences(filename, Context.MODE_PRIVATE);
-        auth=FirebaseAuth.getInstance();
-        if (sharedPreferences.contains(username)){
-            Intent i=new Intent(getApplicationContext(),HomeActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(i);
-            finish();
-        }
-        editor=sharedPreferences.edit();
+        auth = FirebaseAuth.getInstance();
+        sharedPreferences = getSharedPreferences(filename, Context.MODE_PRIVATE);
+        auth = FirebaseAuth.getInstance();
+//        if (sharedPreferences.contains(username)){
+//            Intent i=new Intent(getApplicationContext(),HomeActivity.class);
+//            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//            startActivity(i);
+//            finish();
+//        }
+        editor = sharedPreferences.edit();
         setContentView(R.layout.activity_login);
-        noaccount=findViewById(R.id.noaccount);
-        forgotpasswd=findViewById(R.id.forgot_passwd);
-        luname=findViewById(R.id.luname);
-        lpassword=findViewById(R.id.lpasswd);
-        forgotpasswd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                reference=FirebaseDatabase.getInstance().getReference("users");
-                reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Intent i=new Intent(getApplicationContext(),ForgotPassword.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(i);
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
-            }
+        noaccount = findViewById(R.id.noaccount);
+        forgotpasswd = findViewById(R.id.forgot_passwd);
+        luname = findViewById(R.id.luname);
+        lpassword = findViewById(R.id.lpasswd);
+        forgotpasswd.setOnClickListener(view -> {
+            reference = FirebaseDatabase.getInstance().getReference("users");
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Intent i = new Intent(getApplicationContext(), ForgotPassword.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(i);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
         });
 
-        login=findViewById(R.id.login);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String uname = luname.getText().toString();
-                String pass = lpassword.getText().toString();
-                auth.signInWithEmailAndPassword(uname,pass).addOnSuccessListener(authResult -> {
-                    editor.putString(username,uname);
-                    editor.apply();
-                    Intent i;
-                    if (uname.equals("foodievibesowner@gmail.com") && pass.equals("foodievibes")) {
-                        i = new Intent(getApplicationContext(), FoodieVibes.class);
-                    }
-                    else{
-                        i = new Intent(getApplicationContext(), HomeActivity.class);
-                    }
+        login = findViewById(R.id.login);
+        login.setOnClickListener(view -> {
+            String uname = luname.getText().toString();
+            String pass = lpassword.getText().toString();
+            auth.signInWithEmailAndPassword(uname, pass).addOnSuccessListener(authResult -> {
+                editor.putString(username, uname);
+                editor.apply();
+                Intent i;
+                if (uname.equals("foodievibesowner@gmail.com") && pass.equals("foodievibes")) {
+                    i = new Intent(getApplicationContext(), FoodieVibes.class);
                     startActivity(i);
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull @NotNull Exception e) {
-                        Toast.makeText(Login.this, "Please Enter Valid email and password", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                    finish();
+                } else {
+                    i = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull @NotNull Exception e) {
+                    Toast.makeText(Login.this, "Please Enter Valid email and password", Toast.LENGTH_SHORT).show();
+
+                }
+            });
 //                if (uname.equals("owner") && pass.equals("foodievibes")) {
 //                    Intent i=new Intent(getApplicationContext(), FoodieVibes.class);
 //                    startActivity(i);
@@ -130,12 +135,11 @@ public class Login extends AppCompatActivity {
 //                        }
 //                    });
 //                }
-            }
         });
         noaccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(getApplicationContext(),MainActivity.class);
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(i);
             }
         });
@@ -144,10 +148,19 @@ public class Login extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent exit=new Intent(Intent.ACTION_MAIN);
+        Intent exit = new Intent(Intent.ACTION_MAIN);
         exit.addCategory(Intent.CATEGORY_HOME);
         exit.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(exit);
         finish();
     }
+
+//    private void updateUI(FirebaseUser user) {
+//        if (user != null) {
+//            Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+//            startActivity(i);
+//        } else {
+//
+//        }
+//    }
 }
