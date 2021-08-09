@@ -5,6 +5,14 @@
     android:layout_height="match_parent"
     tools:context="fragments.OrderFragment">
 
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp" />
+
     <ImageView
         android:id="@+id/orderimg"
         android:layout_width="32dp"
@@ -18,11 +26,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="7dp"
         android:fontFamily="@font/poppins_semibold"
         android:text="No Orders" />
+
+    <FrameLayout
+        android:id="@+id/framelayoutfav"
+        android:layout_width="231dp"
+        android:layout_height="284dp"
+        android:layout_gravity="center">
+
+    </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/orderrecycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
 </FrameLayout>

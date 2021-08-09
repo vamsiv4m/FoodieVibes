@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.tejuproject.R;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +30,7 @@ public class ViewOrders extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_orders);
+        TextView noorders=findViewById(R.id.noorders);
         RecyclerView recyclerView=findViewById(R.id.vieworderrecycler);
         ViewOrdersAdapter viewOrdersAdapter=new ViewOrdersAdapter(getApplicationContext(),list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(),RecyclerView.VERTICAL,false);
@@ -39,8 +42,14 @@ public class ViewOrders extends AppCompatActivity {
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 list.clear();
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()){
-                    OrdersModel ordersModel=dataSnapshot.getValue(OrdersModel.class);
-                    list.add(ordersModel);
+                    if (dataSnapshot!=null) {
+                        noorders.setVisibility(View.GONE);
+                        OrdersModel ordersModel = dataSnapshot.getValue(OrdersModel.class);
+                        list.add(ordersModel);
+                    }
+                    else{
+                        noorders.setVisibility(View.VISIBLE);
+                    }
                 }
                 viewOrdersAdapter.notifyDataSetChanged();
             }

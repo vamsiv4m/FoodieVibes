@@ -1,5 +1,6 @@
 package fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,7 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.tejuproject.R;
@@ -45,7 +48,9 @@ public class OrderFragment extends Fragment {
         String uid= FirebaseAuth.getInstance().getUid();
         orderimg=v.findViewById(R.id.orderimg);
         ordertext=v.findViewById(R.id.ordertext);
-
+        ordertext.setVisibility(View.GONE);
+        ProgressBar progressBar=v.findViewById(R.id.progressBar2);
+        progressBar.setVisibility(View.VISIBLE);
         RecyclerView recyclerView=v.findViewById(R.id.orderrecycler);
         OrdersAdapter ordersAdapter=new OrdersAdapter(list,getContext());
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
@@ -59,18 +64,19 @@ public class OrderFragment extends Fragment {
                 list.clear();
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
                     if (dataSnapshot!=null){
+                        FrameLayout layout=v.findViewById(R.id.framelayoutfav);
+                        layout.setBackgroundColor(Color.parseColor("#F7F3FF"));
                         ordertext.setVisibility(View.GONE);
                         orderimg.setVisibility(View.GONE);
                         Log.d("mydatasnapshot",dataSnapshot+"");
                         OrdersModel ordersModel=dataSnapshot.getValue(OrdersModel.class);
                         list.add(ordersModel);
                     }
-                   else{
-                       orderimg.setVisibility(View.VISIBLE);
-                       ordertext.setVisibility(View.VISIBLE);
-                    }
                 }
                 ordersAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
+                orderimg.setVisibility(View.VISIBLE);
+                ordertext.setVisibility(View.VISIBLE);
             }
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
